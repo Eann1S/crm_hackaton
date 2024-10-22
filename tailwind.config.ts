@@ -20,11 +20,14 @@ const config: Config = {
   },
   daisyui: {
     themes: [
+      "light",
       {
         light: {
           ...require("daisyui/src/theming/themes")["light"],
           "primary": "007AFF",
           "primary-content": "#ffffff",
+          "neutral": "E9DCDC",
+          "neutral-content": "#ffffff",
         },
       },
     ],

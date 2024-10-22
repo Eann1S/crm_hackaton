@@ -10,7 +10,7 @@ export default function AuthLayout({
           MVP
         </h1>
       </div>
-      <div className="flex flex-auto justify-center items-center p-[10px]">
+      <div className="flex flex-auto justify-center items-center p-2">
         {children}
       </div>
     </main>

@@ -18,11 +18,11 @@ export default function Modal({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col justify-between w-[375px] h-[650px] px-[40px] py-[50px] rounded-[20px] shadow">
-      <div className="flex flex-row justify-center text-center">
-        <h1 className="text-[32px]">{title}</h1>
+    <div className="flex flex-col justify-between w-[400px] h-[640px] px-10 py-12 rounded-2xl shadow">
+      <div className="flex flex-row justify-center">
+        <h1 className="text-[32px] text-center">{title}</h1>
       </div>
-      <div className="flex flex-col justify-center gap-[35px]">
+      <div className="flex flex-col justify-center gap-6">
         <Input inputType="text" placeholder="Email">
           <EnvelopeIcon className="size-5" />
         </Input>
@@ -42,7 +42,7 @@ export default function Modal({
         <button className="btn btn-primary text-base font-medium">{buttonText}</button>
       </div>
       <div className="flex flex-row justify-center">
-        <p className="text-[12px]">{children}</p>
+        <p className="text-[12px] text-center">{children}</p>
       </div>
     </div>
   );
