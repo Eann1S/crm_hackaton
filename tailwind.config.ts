@@ -13,7 +13,21 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      boxShadow: {
+        'DEFAULT': '0px 0px 15px 0px rgba(0, 0, 0, 0.2)',
+      }
     },
+  },
+  daisyui: {
+    themes: [
+      {
+        light: {
+          ...require("daisyui/src/theming/themes")["light"],
+          "primary": "007AFF",
+          "primary-content": "#ffffff",
+        },
+      },
+    ],
   },
   plugins: [require("@tailwindcss/typography"), require("daisyui")],
 };
