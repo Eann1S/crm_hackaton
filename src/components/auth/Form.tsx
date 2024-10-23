@@ -73,7 +73,7 @@ export default function Form({
         </Input>
         {repeat && (
           <Input
-            id="repeat"
+            id="password"
             inputType="password"
             placeholder="Repeat password"
             register={register}
@@ -104,7 +104,7 @@ function Input({
   register,
 }: {
   children: React.ReactNode;
-  id: string;
+  id: 'email' | 'password';
   inputType: string;
   placeholder: string;
   error?: FieldError;
