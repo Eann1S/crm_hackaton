@@ -1,7 +1,7 @@
-import NextAuth, { DefaultSession, User } from "next-auth";
+import NextAuth, { DefaultSession } from "next-auth";
 import GitHub from "next-auth/providers/github";
 import Credentials from "next-auth/providers/credentials";
-import { Role } from "./src/utils/constants";
+import { admin, manager, user } from "./src/utils/constants";
 import "next-auth/jwt";
 
 declare module "next-auth" {
@@ -54,18 +54,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         password: {},
       },
       authorize: async (credentials) => {
-        const admin: User = {
-          id: "id",
-          email: "admin@email.com",
-          role: Role.ADMIN,
-          firstname: "firstname",
-          lastname: "lastname",
-        };
-        if (
-          credentials.email === "admin@email.com" &&
-          credentials.password === "admin"
-        ) {
+        console.log(credentials);
+        if (isUser(credentials)) {
+          return user;
+        } else if (isAdmin(credentials)) {
           return admin;
+        } else if (isManager(credentials)) {
+          return manager;
         }
 
         return null;
@@ -94,3 +89,28 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
   },
 });
+
+const isAdmin = (
+  credentials: Partial<Record<"email" | "password", unknown>>
+) => {
+  return areCredentialsValid(admin, credentials);
+};
+const isManager = (
+  credentials: Partial<Record<"email" | "password", unknown>>
+) => {
+  return areCredentialsValid(manager, credentials);
+};
+const isUser = (
+  credentials: Partial<Record<"email" | "password", unknown>>
+) => {
+  return areCredentialsValid(user, credentials);
+};
+const areCredentialsValid = (
+  validCredentials: { email: string; password: string },
+  credentials: Partial<Record<"email" | "password", unknown>>
+) => {
+  return (
+    credentials.email === validCredentials.email &&
+    credentials.password === validCredentials.password
+  );
+};

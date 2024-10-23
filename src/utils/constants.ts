@@ -24,3 +24,28 @@ export const Role = {
   MANAGER: 'MANAGER',
   ADMIN: 'ADMIN'
 };
+
+export const admin = {
+  id: "admin_id",
+  email: "admin@email.com",
+  password: 'admin',
+  role: Role.ADMIN,
+  firstname: "admin",
+  lastname: "admin",
+};
+export const manager = {
+  id: "manager_id",
+  email: "manager@email.com",
+  password: 'manager',
+  role: Role.MANAGER,
+  firstname: "manager",
+  lastname: "manager",
+};
+export const user = {
+  id: "user_id",
+  email: "user@email.com",
+  password: 'user',
+  role: Role.USER,
+  firstname: "user",
+  lastname: "user",
+};
