@@ -6,7 +6,6 @@ export default function Register() {
     <Form
       title={"Зарегистрироваться"}
       buttonText={"Зарегистрироваться"}
-      repeat
     >
       Если вы уже зарегестрированы нажмите{" "}
       <Link href={"/auth/login"} className="link">

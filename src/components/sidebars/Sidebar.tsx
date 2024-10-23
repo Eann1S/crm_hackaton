@@ -6,10 +6,7 @@ export default function Sidebar({
   tabs,
   pathname,
 }: {
-  tabs: {
-    label: string;
-    path: string;
-  }[];
+  tabs: Tab[];
   pathname: string;
 }) {
   return (
@@ -24,7 +21,7 @@ function SidebarMenu({
   tabs,
   pathname,
 }: {
-  tabs: { label: string; path: string }[];
+  tabs: Tab[];
   pathname: string;
 }) {
   return (
@@ -47,13 +44,14 @@ function SidebarItem({
   tab,
   pathname,
 }: {
-  tab: { label: string; path: string };
+  tab: Tab;
   pathname: string;
 }) {
   const isActive = pathname === tab.path;
   return (
     <li>
       <Link className={clsx("shadow", isActive && "active")} href={tab.path}>
+        {tab.icon}
         {tab.label}
       </Link>
     </li>
@@ -72,3 +70,5 @@ function SidebarFooter() {
     </div>
   );
 }
+
+type Tab = { label: string; path: string, icon: any }
