@@ -1,11 +1,7 @@
 "use client";
 
 import { EnvelopeIcon, KeyIcon } from "@heroicons/react/24/outline";
-import {
-  FieldError,
-  useForm,
-  UseFormRegister,
-} from "react-hook-form";
+import { FieldError, useForm, UseFormRegister } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SignInSchema, signInSchema } from "../../utils/zod";
 import { signIn } from "next-auth/react";
@@ -15,11 +11,9 @@ export default function Form({
   children,
   title,
   buttonText,
-  repeat,
 }: {
   title: string;
   buttonText: string;
-  repeat?: boolean;
   children: React.ReactNode;
 }) {
   const router = useRouter();
@@ -45,7 +39,7 @@ export default function Form({
   };
 
   return (
-    <div className="flex flex-col justify-between w-[400px] h-[640px] px-10 py-12 rounded-2xl shadow">
+    <div className="flex flex-col justify-between w-[400px] h-[640px] px-10 pt-16 pb-12 rounded-2xl shadow">
       <div className="flex flex-row justify-center">
         <h1 className="text-[32px] text-center">{title}</h1>
       </div>
@@ -53,34 +47,18 @@ export default function Form({
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col justify-center gap-6"
       >
-        <Input
-          id="email"
-          inputType="text"
-          placeholder="Email"
-          error={errors.email}
-          register={register}
-        >
-          <EnvelopeIcon className="size-5" />
-        </Input>
-        <Input
-          id="password"
-          inputType="password"
-          placeholder="Password"
-          error={errors.password}
-          register={register}
-        >
-          <KeyIcon className="size-5" />
-        </Input>
-        {repeat && (
+        {formFields.map((field) => (
           <Input
-            id="password"
-            inputType="password"
-            placeholder="Repeat password"
+            key={field.id}
+            id={field.id as "email" | "password"}
+            inputType={field.inputType}
+            placeholder={field.placeholder}
+            error={errors[field.id]}
             register={register}
           >
-            <KeyIcon className="size-5" />
+            {field.icon}
           </Input>
-        )}
+        ))}
         <button type="submit" className="btn btn-primary text-base font-medium">
           {buttonText}
         </button>
@@ -95,6 +73,27 @@ export default function Form({
   );
 }
 
+type FormType = {
+  id: "email" | "password";
+  inputType: string;
+  placeholder: string;
+  icon: any;
+};
+const formFields: FormType[] = [
+  {
+    id: "email",
+    inputType: "text",
+    placeholder: "Email",
+    icon: <EnvelopeIcon className="size-5" />,
+  },
+  {
+    id: "password",
+    inputType: "password",
+    placeholder: "Password",
+    icon: <KeyIcon className="size-5" />,
+  },
+];
+
 function Input({
   children,
   id,
@@ -104,12 +103,9 @@ function Input({
   register,
 }: {
   children: React.ReactNode;
-  id: 'email' | 'password';
-  inputType: string;
-  placeholder: string;
   error?: FieldError;
   register: UseFormRegister<SignInSchema>;
-}) {
+} & Omit<FormType, "icon">) {
   return (
     <div>
       <label className="input input-bordered flex items-center gap-2">

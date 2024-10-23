@@ -5,14 +5,18 @@ import {
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { auth } from "../../../auth";
-import { orders, Role } from "../../utils/constants";
+import { orders, Roles } from "../../utils/constants";
+import { Status } from "@/utils/types";
 
 export default async function Profile() {
   const session = await auth();
   if (!session) return null;
-  const user = session.user;
-  const showOrders = user.role === Role.USER;
-  const fullName = (user.firstname && user.lastname) && user.firstname + ' ' + user.lastname || 'Аноним';
+  
+  const { user } = session;
+  const { firstname, lastname, role } = user;
+  
+  const showOrders = role === Roles.USER;
+  const fullName = firstname && lastname ? `${firstname} ${lastname}` : 'Аноним';
   return (
     <div className="flex flex-col w-full h-full px-8">
       <div className="flex flex-col justify-start gap-2 py-10">
@@ -64,20 +68,9 @@ export default async function Profile() {
                   <h1 className="text-2xl font-semibold">История заказов</h1>
                 </div>
                 <div className="flex flex-col gap-5">
-                  {orders.map((order) => {
-                    switch (order.status) {
-                      case "success":
-                        return (
-                          <SuccessOrder key={order.number} order={order} />
-                        );
-                      case "pending":
-                        return (
-                          <PendingOrder key={order.number} order={order} />
-                        );
-                      case "cancel":
-                        return <CancelOrder key={order.number} order={order} />;
-                    }
-                  })}
+                  {orders.map((order) => (
+                    <OrderStatus key={order.number} order={order} />
+                  ))}
                 </div>
               </div>
             </>
@@ -88,48 +81,28 @@ export default async function Profile() {
   );
 }
 
-const SuccessOrder = ({
-  order,
-}: {
-  order: {
-    number: number;
-    status: string;
-  };
-}) => {
-  return (
-    <Order order={order}>
-      <p className="text-green-500">{order.status} </p>
-      <CheckCircleIcon className="w-5 inline text-green-600" />
-    </Order>
-  );
+const orderStatusConfig = {
+  success: {
+    color: "text-green-500",
+    icon: <CheckCircleIcon className="w-5 inline text-green-600" />,
+  },
+  pending: {
+    color: "text-yellow-200",
+    icon: <ArrowPathIcon className="w-5 inline text-yellow-200" />,
+  },
+  cancel: {
+    color: "text-red-500",
+    icon: <XCircleIcon className="w-5 inline text-red-600" />,
+  },
 };
-const PendingOrder = ({
-  order,
-}: {
-  order: {
-    number: number;
-    status: string;
-  };
-}) => {
+
+const OrderStatus = ({ order }: { order: { number: number; status: Status } }) => {
+  const statusConfig = orderStatusConfig[order.status];
+
   return (
     <Order order={order}>
-      <p className="text-yellow-200">{order.status} </p>
-      <ArrowPathIcon className="w-5 inline text-yellow-200" />
-    </Order>
-  );
-};
-const CancelOrder = ({
-  order,
-}: {
-  order: {
-    number: number;
-    status: string;
-  };
-}) => {
-  return (
-    <Order order={order}>
-      <p className="text-red-500">{order.status} </p>
-      <XCircleIcon className="w-5 inline text-red-600" />
+      <p className={`${statusConfig.color}`}>{order.status}</p>
+      {statusConfig.icon}
     </Order>
   );
 };
