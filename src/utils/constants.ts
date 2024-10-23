@@ -49,3 +49,11 @@ export const user = {
   firstname: "user",
   lastname: "user",
 };
+
+export const orders = [
+  { number: 1, status: "pending" },
+  { number: 2, status: "pending" },
+  { number: 3, status: "success" },
+  { number: 4, status: "success" },
+  { number: 5, status: "cancel" },
+];
