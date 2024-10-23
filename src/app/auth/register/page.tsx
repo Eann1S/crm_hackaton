@@ -1,18 +1,17 @@
-import Modal from "../../../components/auth/Modal";
+import Form from "../../../components/auth/Form";
 import Link from "next/link";
 
 export default function Register() {
   return (
-    <Modal
+    <Form
       title={"Зарегистрироваться"}
       buttonText={"Зарегистрироваться"}
-      username={true}
-      repeat={true}
+      repeat
     >
       Если вы уже зарегестрированы нажмите{" "}
       <Link href={"/auth/login"} className="link">
         здесь
       </Link>
-    </Modal>
+    </Form>
   );
 }

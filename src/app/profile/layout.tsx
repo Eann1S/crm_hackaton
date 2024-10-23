@@ -1,13 +1,20 @@
-import Sidebar from "../../components/profile/Sidebar";
+"use client";
 
-export default async function ProfileLayout({
+import { useSession } from "next-auth/react";
+import DynamicSidebar from "../../components/sidebars/DynamicSidebar";
+
+export default function ProfileLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { data: session } = useSession();
+  if (!session) {
+    return null;
+  }
   return (
     <main className="w-screen h-screen flex flex-row gap-2">
-      <Sidebar />
+      <DynamicSidebar role={session.user.role} />
       <div className="grow">{children}</div>
     </main>
   );
