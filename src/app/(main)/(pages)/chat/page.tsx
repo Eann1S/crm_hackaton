@@ -5,10 +5,21 @@ import {
 } from "@heroicons/react/24/outline";
 import MainPagesLayout from "../../../../components/layout/MainPagesLayout";
 import Avatar from "../../../../components/profile/Avatar";
+import { auth } from "../../../../../auth";
+import { Roles } from "../../../../utils/constants";
 
-export default function Chat() {
+export default async function Chat() {
+  const session = await auth();
+  if (!session) return null;
+
+  const user = session?.user;
+  const isManager = user.role === Roles.MANAGER;
+
+  const title = isManager ? "Чат с клиентом" : "Чат с менеджером";
+  const { name, phoneNumber } = !isManager ? manager : client;
+
   return (
-    <MainPagesLayout title="Чат с менеджером">
+    <MainPagesLayout title={title}>
       <div className="flex flex-col px-4 w-[1120px] h-full justify-between shadow rounded-xl">
         <div className="flex flex-row justify-between items-center py-4">
           <button className="btn btn-ghost text-base">
@@ -16,8 +27,10 @@ export default function Chat() {
             {"Выйти"}
           </button>
           <div className="flex flex-col justify-center">
-            <h1 className="text-xl font-semibold text-center">Менеджер</h1>
-            <h1 className="text-lg font-semibold text-center">+79371182721</h1>
+            <h1 className="text-xl font-semibold text-center">
+              {name}
+            </h1>
+            <h1 className="text-lg font-semibold text-center">{phoneNumber}</h1>
           </div>
           <div className="w-[52px]">
             <Avatar />
@@ -26,14 +39,14 @@ export default function Chat() {
         <div className="flex flex-col py-5 gap-10">
           <div className="flex flex-col">
             <Message
-              username="Менеджер"
+              username={isManager ? 'Я' : name}
               message="Здравствуйте, я менеджер, чем могу вам помочь?"
               time="12:40"
             />
           </div>
           <div className="flex flex-col">
             <Message
-              username="Клиент"
+              username={!isManager ? 'Я' : name}
               message="Здравствуйте, хотел бы сделать заказ..."
               time="12:46"
             />
@@ -77,3 +90,12 @@ function Message({
     </div>
   );
 }
+
+const client = {
+  name: 'Клиент',
+  phoneNumber: "+79371532644",
+};
+const manager = {
+  name: 'Менеджер',
+  phoneNumber: "+79371182721",
+};
