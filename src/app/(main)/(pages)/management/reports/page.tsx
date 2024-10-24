@@ -3,7 +3,7 @@ import MainPagesLayout from "../../../../../components/layout/MainPagesLayout";
 
 export default function ReportsManagement() {
   return (
-    <MainPagesLayout title="Управление проектами">
+    <MainPagesLayout title="Управление отчетами">
       <div className="grid grid-cols-5 gap-x-6 gap-y-16">
         {projects.map((project) => (
           <Project key={project.number} {...project} />
