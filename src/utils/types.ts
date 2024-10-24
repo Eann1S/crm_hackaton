@@ -1,7 +1,7 @@
 export type Role = 'USER' | 'MANAGER' | 'ADMIN';
 
-export type Order = {
-  number: number;
+export type OrderType = {
+  id: number;
   status: Status;
 };
 

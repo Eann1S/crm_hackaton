@@ -6,7 +6,7 @@ import {
 import Image from "next/image";
 import { auth } from "../../../auth";
 import { orders, Roles } from "../../utils/constants";
-import { Status } from "@/utils/types";
+import { OrderType } from "@/utils/types";
 
 export default async function Profile() {
   const session = await auth();
@@ -69,7 +69,7 @@ export default async function Profile() {
                 </div>
                 <div className="flex flex-col gap-5">
                   {orders.map((order) => (
-                    <OrderStatus key={order.number} order={order} />
+                    <OrderStatus key={order.id} order={order} />
                   ))}
                 </div>
               </div>
@@ -96,7 +96,7 @@ const orderStatusConfig = {
   },
 };
 
-const OrderStatus = ({ order }: { order: { number: number; status: Status } }) => {
+const OrderStatus = ({ order }: { order: OrderType }) => {
   const statusConfig = orderStatusConfig[order.status];
 
   return (
@@ -112,14 +112,11 @@ const Order = ({
   order,
 }: {
   children: React.ReactNode;
-  order: {
-    number: number;
-    status: string;
-  };
+  order: OrderType
 }) => {
   return (
-    <div className="flex flex-row gap-3" key={order.number}>
-      <p className="font-medium text-lg">Заказ №{order.number}</p>
+    <div className="flex flex-row gap-3" key={order.id}>
+      <p className="font-medium text-lg">Заказ №{order.id}</p>
       {children}
     </div>
   );

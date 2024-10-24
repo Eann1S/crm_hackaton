@@ -1,4 +1,4 @@
-import { Order } from "./types";
+import { OrderType } from "./types";
 
 export const Roles = {
   USER: 'USER',
@@ -31,10 +31,10 @@ export const user = {
   lastname: "user",
 };
 
-export const orders: Order[] = [
-  { number: 1, status: "pending" },
-  { number: 2, status: "pending" },
-  { number: 3, status: "success" },
-  { number: 4, status: "success" },
-  { number: 5, status: "cancel" },
+export const orders: OrderType[] = [
+  { id: 1, status: "pending" },
+  { id: 2, status: "pending" },
+  { id: 3, status: "success" },
+  { id: 4, status: "success" },
+  { id: 5, status: "cancel" },
 ];

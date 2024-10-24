@@ -1,9 +1,9 @@
-import Form from "../../../components/auth/Form";
 import Link from "next/link";
+import RegisterForm from "../../../components/auth/RegisterForm";
 
 export default function Register() {
   return (
-    <Form
+    <RegisterForm
       title={"Зарегистрироваться"}
       buttonText={"Зарегистрироваться"}
     >
@@ -11,6 +11,6 @@ export default function Register() {
       <Link href={"/auth/login"} className="link">
         здесь
       </Link>
-    </Form>
+    </RegisterForm>
   );
 }
