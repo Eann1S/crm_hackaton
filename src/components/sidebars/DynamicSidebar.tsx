@@ -31,7 +31,7 @@ export const roleBasedTabs = {
     { label: "Управление клиентами", path: "/management/clients", icon: <Cog6ToothIcon className="w-7" /> },
     { label: "Регистрация менеджеров", path: "/manager-registration", icon: <SquaresPlusIcon className="w-7" /> },
     { label: "Управление менеджерами", path: "/management/managers", icon: <Cog6ToothIcon className="w-7" /> },
-    { label: "Доступ к сводным отчётам", path: "/reports", icon: <ListBulletIcon className="w-7" /> },
+    { label: "Доступ к сводным отчётам", path: "/management/reports", icon: <ListBulletIcon className="w-7" /> },
   ],
 };
 export type Tab = { label: string; path: string, icon: any }
