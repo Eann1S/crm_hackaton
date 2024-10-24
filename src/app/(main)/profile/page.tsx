@@ -3,20 +3,21 @@ import {
   CheckCircleIcon,
   XCircleIcon,
 } from "@heroicons/react/24/outline";
-import Image from "next/image";
-import { auth } from "../../../auth";
-import { orders, Roles } from "../../utils/constants";
+import { auth } from "../../../../auth";
+import { orders, Roles } from "../../../utils/constants";
 import { OrderType } from "@/utils/types";
+import Avatar from "../../../components/profile/Avatar";
 
 export default async function Profile() {
   const session = await auth();
   if (!session) return null;
-  
+
   const { user } = session;
   const { firstname, lastname, role } = user;
-  
+
   const showOrders = role === Roles.USER;
-  const fullName = firstname && lastname ? `${firstname} ${lastname}` : 'Аноним';
+  const fullName =
+    firstname && lastname ? `${firstname} ${lastname}` : "Аноним";
   return (
     <div className="flex flex-col w-full h-full px-8">
       <div className="flex flex-col justify-start gap-2 py-10">
@@ -30,16 +31,9 @@ export default async function Profile() {
       <div className="flex flex-row justify-center">
         <h1 className="text-2xl font-medium">{fullName}</h1>
       </div>
-      <div className="flex flex-col gap-2">
-        <div className="avatar flex flex-row justify-center">
-          <div className="w-80 rounded-full">
-            <Image
-              width={500}
-              height={500}
-              src={"/avatar.png"}
-              alt="profile image"
-            />
-          </div>
+      <div className="flex flex-col gap-2 items-center">
+        <div className="w-[360px]">
+          <Avatar />
         </div>
         <div className="flex flex-row px-3 py-5 gap-2 shadow mx-auto">
           <div className="flex flex-col gap-5 px-4">
@@ -62,7 +56,7 @@ export default async function Profile() {
           </div>
           {showOrders && (
             <>
-              <div className="bg-black flex-none w-[1px]"></div>
+              <div className="divider divider-horizontal"></div>
               <div className="flex flex-col gap-5 px-4">
                 <div className="flex flex-row justify-center">
                   <h1 className="text-2xl font-semibold">История заказов</h1>
@@ -112,7 +106,7 @@ const Order = ({
   order,
 }: {
   children: React.ReactNode;
-  order: OrderType
+  order: OrderType;
 }) => {
   return (
     <div className="flex flex-row gap-3" key={order.id}>

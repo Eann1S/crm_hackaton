@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { clsx } from "clsx";
 import { signOut } from "next-auth/react";
+import { Tab } from "./DynamicSidebar";
 
 export default function Sidebar({
   tabs,
@@ -71,4 +72,3 @@ function SidebarFooter() {
   );
 }
 
-type Tab = { label: string; path: string, icon: any }

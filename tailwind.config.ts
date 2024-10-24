@@ -26,7 +26,7 @@ const config: Config = {
           ...require("daisyui/src/theming/themes")["light"],
           "primary": "007AFF",
           "primary-content": "white",
-          "neutral": "CBCBCB",
+          "neutral": "DADADA",
           "neutral-content": "black",
         },
       },

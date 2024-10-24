@@ -34,3 +34,4 @@ export const roleBasedTabs = {
     { label: "Доступ к сводным отчётам", path: "/reports", icon: <ListBulletIcon className="w-7" /> },
   ],
 };
+export type Tab = { label: string; path: string, icon: any }
